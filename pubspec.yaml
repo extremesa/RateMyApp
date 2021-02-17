@@ -4,8 +4,8 @@ version: 0.7.2 # Remember to also change the version in "ios/bonsoir.podspec", "
 homepage: https://github.com/Skyost/RateMyApp
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.0 <2.0.0"
+  sdk: ">=2.8.0 <3.0.0"
+  # flutter: ">=1.12.0 <2.0.0"
 
 dependencies:
   shared_preferences: ^0.5.6
