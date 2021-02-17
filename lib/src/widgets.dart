@@ -3,9 +3,7 @@ import 'package:rate_my_app/rate_my_app.dart';
 
 /// Should be called once Rate my app has been initialized.
 typedef RateMyAppInitializedCallback = Function(
-  BuildContext context,
-  RateMyApp rateMyApp,
-);
+    BuildContext context, RateMyApp rateMyApp);
 
 /// Allows to build a widget and initialize Rate my app.
 class RateMyAppBuilder extends StatefulWidget {
@@ -13,17 +11,17 @@ class RateMyAppBuilder extends StatefulWidget {
   final WidgetBuilder builder;
 
   /// The Rate my app instance.
-  final RateMyApp? rateMyApp;
+  final RateMyApp rateMyApp;
 
   /// Called when rate my app has been initialized.
   final RateMyAppInitializedCallback onInitialized;
 
   /// Creates a new rate my app builder instance.
   const RateMyAppBuilder({
-    required this.onInitialized,
-    required this.builder,
+    @required this.builder,
     this.rateMyApp,
-  });
+    this.onInitialized,
+  }) : assert(builder != null);
 
   @override
   State<StatefulWidget> createState() => _RateMyAppBuilderState();
@@ -32,7 +30,7 @@ class RateMyAppBuilder extends StatefulWidget {
 /// The rate my app builder state.
 class _RateMyAppBuilderState extends State<RateMyAppBuilder> {
   /// The current Rate my app instance.
-  late RateMyApp rateMyApp;
+  RateMyApp rateMyApp;
 
   @override
   void initState() {
@@ -46,8 +44,8 @@ class _RateMyAppBuilderState extends State<RateMyAppBuilder> {
   Future<void> initRateMyApp() async {
     await rateMyApp.init();
 
-    if (mounted) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+    if (widget.onInitialized != null && mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.onInitialized(context, rateMyApp);
       });
     }
